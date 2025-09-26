@@ -10,22 +10,68 @@ const noBtn = document.getElementById('noBtn');
 // Current page index
 let currentPage = 1;
 const totalPages = 4;
+let musicInitialized = false;
 
 // Initialize the website
 function initWebsite() {
     createStars();
     createHearts();
-    
-    // Start background music after 2 seconds
-    setTimeout(() => {
-        backgroundMusic.volume = 0.3;
-        backgroundMusic.play().catch(e => {
-            console.log('Background music play prevented:', e);
-        });
-    }, 2000);
+    createMusicControl();
     
     // Show first page
     showPage(currentPage);
+    
+    // Initialize music after user interaction
+    document.addEventListener('click', initializeMusic, { once: true });
+    document.addEventListener('touchstart', initializeMusic, { once: true });
+}
+
+// Create music control button
+function createMusicControl() {
+    const musicControl = document.createElement('button');
+    musicControl.className = 'music-control';
+    musicControl.innerHTML = '🔇';
+    musicControl.title = 'Toggle Music';
+    
+    musicControl.addEventListener('click', function() {
+        if (backgroundMusic.paused && celebrationMusic.paused) {
+            // Play appropriate music based on current scene
+            if (royalDiaryScene.style.display === 'flex') {
+                celebrationMusic.play().catch(e => console.log('Music play prevented'));
+                this.innerHTML = '🔊';
+            } else {
+                backgroundMusic.play().catch(e => console.log('Music play prevented'));
+                this.innerHTML = '🔊';
+            }
+        } else {
+            // Pause all music
+            backgroundMusic.pause();
+            celebrationMusic.pause();
+            this.innerHTML = '🔇';
+        }
+    });
+    
+    document.body.appendChild(musicControl);
+}
+
+// Initialize music after user interaction
+function initializeMusic() {
+    if (musicInitialized) return;
+    
+    musicInitialized = true;
+    
+    // Set music volumes
+    backgroundMusic.volume = 0.3;
+    celebrationMusic.volume = 0.5;
+    
+    // Try to play background music
+    backgroundMusic.play().then(() => {
+        console.log('Background music started');
+        document.querySelector('.music-control').innerHTML = '🔊';
+    }).catch(e => {
+        console.log('Background music play prevented, will play after user interaction');
+        // Music will play on next user interaction
+    });
 }
 
 // Create starry background
@@ -94,7 +140,29 @@ function nextPage() {
             // Proposal page - add special effects
             createConstellation();
         }
+        
+        // Play page turn sound
+        playPageTurnSound();
     }
+}
+
+// Page turn sound
+function playPageTurnSound() {
+    // Simple page turn sound using Web Audio API
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    oscillator.type = 'sine';
+    oscillator.frequency.value = 200;
+    gainNode.gain.value = 0.1;
+    
+    oscillator.start();
+    gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.3);
+    oscillator.stop(audioContext.currentTime + 0.3);
 }
 
 // Create constellation effect
@@ -157,33 +225,38 @@ function createConnection(star1, star2) {
 
 // Handle Yes button click
 yesBtn.addEventListener('click', function() {
-    // Stop background music
-    backgroundMusic.pause();
+    // Add click effect
+    this.style.animation = 'sparkle 0.5s ease-in-out';
     
-    // Start celebration music
-    celebrationMusic.volume = 0.5;
-    celebrationMusic.play().catch(e => {
-        console.log('Celebration music play prevented:', e);
-    });
-    
-    // Hide storybook
-    storybook.style.opacity = '0';
+    // Fade out background music
+    fadeOutMusic(backgroundMusic, 1000);
     
     // Show candle night scene
     candleNightScene.style.display = 'block';
+    storybook.style.opacity = '0.5';
     
-    // Show royal diary after a delay
+    // Wait 2 seconds then switch to celebration
     setTimeout(() => {
+        // Hide storybook and show royal diary
         storybook.style.display = 'none';
+        candleNightScene.style.display = 'none';
         royalDiaryScene.style.display = 'flex';
+        
+        // Start celebration music after 2 seconds
+        setTimeout(() => {
+            celebrationMusic.currentTime = 0;
+            celebrationMusic.play().then(() => {
+                console.log('Celebration music started');
+                document.querySelector('.music-control').innerHTML = '🔊';
+            }).catch(e => {
+                console.log('Celebration music play prevented');
+            });
+        }, 2000);
         
         // Add celebration effects
         createFireworks();
         createConfetti();
-    }, 1500);
-    
-    // Add sparkle effect to the button
-    this.style.animation = 'sparkle 0.5s ease-in-out';
+    }, 2000);
 });
 
 // Handle No button click (with fun movement)
@@ -210,6 +283,24 @@ noBtn.addEventListener('click', function() {
     // Add event listener for subsequent clicks
     this.onclick = moveButton;
 });
+
+// Fade out music smoothly
+function fadeOutMusic(audioElement, duration) {
+    const initialVolume = audioElement.volume;
+    const stepTime = 50;
+    const steps = duration / stepTime;
+    const volumeStep = initialVolume / steps;
+    
+    const fadeInterval = setInterval(() => {
+        if (audioElement.volume > volumeStep) {
+            audioElement.volume -= volumeStep;
+        } else {
+            audioElement.volume = 0;
+            audioElement.pause();
+            clearInterval(fadeInterval);
+        }
+    }, stepTime);
+}
 
 // Create fireworks celebration
 function createFireworks() {
@@ -299,16 +390,9 @@ document.addEventListener('visibilitychange', function() {
         backgroundMusic.pause();
         celebrationMusic.pause();
     } else {
-        if (royalDiaryScene.style.display === 'flex') {
-            celebrationMusic.play().catch(e => console.log('Music play prevented'));
-        } else {
-            backgroundMusic.play().catch(e => console.log('Music play prevented'));
-        }
+        // Don't auto-resume, let user control music
     }
 });
-
-// Initialize the website when DOM is loaded
-document.addEventListener('DOMContentLoaded', initWebsite);
 
 // Add click effects for stars
 document.addEventListener('click', function(e) {
@@ -344,3 +428,6 @@ function createClickStar(x, y) {
         star.remove();
     }, 1000);
 }
+
+// Initialize the website when DOM is loaded
+document.addEventListener('DOMContentLoaded', initWebsite);
