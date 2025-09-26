@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shambhavi ❤️</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="aurora-bg"></div>
+    <div class="stars-container"></div>
+    <div class="neon-grid"></div>
+    <div class="floating-hearts"></div>
+    
+    <!-- Candle Night Scene -->
+    <div class="candle-night-scene" id="candleNightScene">
+        <div class="candles">
+            <div class="candle left-candle">
+                <div class="flame"></div>
+                <div class="candle-body"></div>
+            </div>
+            <div class="candle right-candle">
+                <div class="flame"></div>
+                <div class="candle-body"></div>
+            </div>
+        </div>
+        <div class="candle-light-glow"></div>
+    </div>
+    
+    <div class="glass-container">
+        <div class="storybook" id="storybook">
+            <!-- Page 1: Cover -->
+            <div class="page cover-page active" id="page1">
+                <div class="page-content">
+                    <div class="vintage-frame">
+                        <div class="polaroid-photo">
+                            <img src="https://placeholder-image-service.onrender.com/image/300x400?prompt=Beautiful+Indian+girl&id=shambhavi1" alt="Shambhavi">
+                            <div class="polaroid-label">My Rasmalai</div>
+                        </div>
+                    </div>
+                    <div class="neon-title">
+                        <h1>For My <span class="flicker">Shambhavi</span></h1>
+                        <p class="typewriter">You're my Rasmalai... 💫</p>
+                    </div>
+                    <button class="next-page-btn" onclick="nextPage()">
+                        <span>Turn Page →</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Page 2: Memories -->
+            <div class="page memories-page" id="page2">
+                <div class="page-content">
+                    <div class="scrapbook-layout">
+                        <div class="memory-tape tape1">📸</div>
+                        <div class="polaroid-grid">
+                            <div class="polaroid-memory">
+                                <img src="https://placeholder-image-service.onrender.com/image/200x250?prompt=Beautiful+smile&id=memory1" alt="Memory 1">
+                                <div class="memory-caption">Your Smile</div>
+                            </div>
+                            <div class="polaroid-memory">
+                                <img src="https://placeholder-image-service.onrender.com/image/200x250?prompt=Laughing+together&id=memory2" alt="Memory 2">
+                                <div class="memory-caption">Your Vibe</div>
+                            </div>
+                        </div>
+                        <div class="handwritten-note">
+                            "Every moment with you feels like a beautiful dream"
+                        </div>
+                    </div>
+                    <button class="next-page-btn" onclick="nextPage()">
+                        <span>Next Chapter →</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Page 3: Letter -->
+            <div class="page letter-page" id="page3">
+                <div class="page-content">
+                    <div class="typewriter-letter">
+                        <div class="letter-header">
+                            <div class="film-reel">🎞️</div>
+                            <h2>My Rasmalai Shambhavi</h2>
+                            <div class="film-reel">🎞️</div>
+                        </div>
+                        <div class="letter-content">
+                            <p>From the first moment I saw you, my world changed colors...</p>
+                            <p>Your smile paints my days with happiness, your love fills my nights with dreams.</p>
+                            <p>You're not just my love, you're my greatest adventure.</p>
+                            <p>I'm not Letting You Go Anywhere</p>
+                        </div>
+                        <div class="seal">💌</div>
+                    </div>
+                    <button class="next-page-btn" onclick="nextPage()">
+                        <span>Final Page →</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Page 4: Proposal -->
+            <div class="page proposal-page" id="page4">
+                <div class="page-content">
+                    <div class="holographic-card">
+                        <div class="iridescent-border"></div>
+                        <div class="proposal-content">
+                            <div class="constellation">
+                                <div class="star-point" style="top:20%; left:30%"></div>
+                                <div class="star-point" style="top:40%; left:60%"></div>
+                                <div class="star-point" style="top:70%; left:40%"></div>
+                            </div>
+                            <h2 class="glowing-text">Will You Be Mine?</h2>
+                            <div class="proposal-options">
+                                <button class="proposal-btn yes-btn" id="yesBtn">
+                                    <span class="btn-sparkle">✨</span>
+                                    YES! 💖
+                                    <span class="btn-sparkle">✨</span>
+                                </button>
+                                <button class="proposal-btn no-btn" id="noBtn">
+                                    No
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Royal Diary Scene -->
+    <div class="royal-diary-scene" id="royalDiaryScene">
+        <div class="royal-diary">
+            <div class="page-left">
+                <div class="royal-border">
+                    <div class="polaroid-royal">
+                        <img src="https://placeholder-image-service.onrender.com/image/350x450?prompt=Rajput+Prince&id=rajput1" alt="Your Photo">
+                    </div>
+                </div>
+            </div>
+
+            <div class="arrow-heart-center">
+                <div class="heart-jewel">👑</div>
+                <div class="arrow-shaft"></div>
+                <div class="heart-jewel">❤️</div>
+            </div>
+
+            <div class="page-right">
+                <div class="royal-border">
+                    <div class="polaroid-royal">
+                        <img src="https://placeholder-image-service.onrender.com/image/350x450?prompt=Rajput+Princess&id=rajput2" alt="Shambhavi's Photo">
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+        <h1 class="royal-title-success">Our Royal Legacy Begins!</h1>
+    </div>
+
+    <!-- Audio Elements -->
+    <audio id="backgroundMusic" loop>
+        <source src="https://www.soundjay.com/misc/sounds/romantic-music.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="celebrationMusic" loop>
+        <source src="https://www.soundjay.com/misc/sounds/wedding-bells.mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
